@@ -26,7 +26,7 @@
       <Button fx:id="ordersButton" onAction="#onGotoOrderPageButtonClick" prefWidth="150" style="-fx-font-size: 16px; -fx-background-radius: 500; -fx-border-radius: 500;" text="Orders" />
       <Button fx:id="usersButton" onAction="#onClickShowUsers" prefWidth="150" style="-fx-font-size: 16px; -fx-background-radius: 500; -fx-border-radius: 500;" text="Employees" />
       <VBox VBox.vgrow="ALWAYS" />
-      <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" prefWidth="150" style="-fx-font-size: 16px; -fx-background-radius: 500; -fx-border-radius: 500;" text="Logout" />
+       <Button fx:id="logoutButton" onAction="#onGotoLoginPageButtonClick" prefWidth="150" style="-fx-font-size: 16px; -fx-background-radius: 500; -fx-background-color: #ff5353; -fx-text-fill: white;" text="Logout"/>
     </VBox>
   </left>
 

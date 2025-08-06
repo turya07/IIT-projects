@@ -9,10 +9,9 @@ import com.example.models.Order;
 import com.example.utils.OrderFactory;
 import com.example.utils.Session;
 
+import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 
@@ -105,6 +104,24 @@ public class OrdersController {
     }
 
     @FXML
+    protected void onCustomersButtonClick() {
+        try {
+            switch (Session.getRole().toLowerCase()) {
+                case "employee":
+                    App.setRoot("users/customerspage", CustomerController.getTitle());
+                    break;
+
+                default:
+                    break;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Error", "Failed to load Products page: " + e.getMessage());
+        }
+    }
+
+    @FXML
     protected void onClickShowUsers() {
         try {
             App.setRoot("users/employeespage");
@@ -121,26 +138,15 @@ public class OrdersController {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("invoicepage.fxml"));
-
-            InvoiceController invoiceController = new InvoiceController();
-            // You may need to convert Order to InvoiceItem(s) as needed
-            ObservableList<InvoiceItem> items = FXCollections.observableArrayList();
-            items.add(new InvoiceItem(
+            InvoiceItem.init(
+                    selectedOrder.getCustomerId(),
                     selectedOrder.getProductName(),
                     selectedOrder.getQuantity(),
                     selectedOrder.getTotalPrice() / selectedOrder.getQuantity(),
-                    selectedOrder.getTotalPrice()));
-            invoiceController.setInvoiceData(
-                    String.valueOf(selectedOrder.getId()),
-                    selectedOrder.getCustomerName(),
-                    "",
-                    items);
-
-            loader.setController(invoiceController);
-
-            // App.setRoot("invoicepage", "Invoice Page - ADMIN");
-            App.setRoot("Invoice Page - ADMIN", loader);
+                    selectedOrder.getTotalPrice(),
+                    selectedOrder.getOrderDate());
+            App.setRoot("invoicepage", "Invoice Page");
+            // App.setRoot("Invoice Page - ADMIN", loader);
 
         } catch (IOException e) {
             e.printStackTrace();

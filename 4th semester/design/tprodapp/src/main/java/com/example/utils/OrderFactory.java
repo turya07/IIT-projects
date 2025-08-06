@@ -26,9 +26,8 @@ public class OrderFactory {
     public ObservableList<Customer> loadCustomers() {
         String sql = "SELECT id, name FROM customers";
 
-        try (Connection conn = ConnectDB.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+        try (PreparedStatement stmt = ConnectDB.getConnection().prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 customerList.add(new Customer(rs.getInt("id"), rs.getString("name"), rs.getString("phone")));
@@ -42,12 +41,13 @@ public class OrderFactory {
     public ObservableList<Product> loadProducts() {
         String sql = "SELECT id, name, price FROM products WHERE quantity > 0";
 
-        try (Connection conn = ConnectDB.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+        try (
+                PreparedStatement stmt = ConnectDB.getConnection().prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                productList.add(new Product(rs.getString("name"), rs.getString("category"), rs.getDouble("price"),
+                productList.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getString("category"),
+                        rs.getDouble("price"),
                         rs.getInt("quantity")));
             }
         } catch (SQLException e) {
@@ -133,7 +133,7 @@ public class OrderFactory {
         return orderList;
     }
 
-    public static ObservableList<Customer> loadCustomersWithPhone() {
+    public ObservableList<Customer> loadCustomersWithPhone() {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
         String sql = "SELECT id, name, phone FROM customers";
         try (Connection conn = ConnectDB.getConnection();
@@ -149,15 +149,20 @@ public class OrderFactory {
         return customers;
     }
 
-    public static ObservableList<Product> loadAvailableProducts() {
+    public ObservableList<Product> loadAvailableProducts() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         String sql = "SELECT id, name, category, price, quantity FROM products WHERE quantity > 0";
 
-        try (Connection conn = ConnectDB.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+        try (
+                PreparedStatement stmt = ConnectDB.getConnection().prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
+                System.out.println(rs.getString(1)
+                        + (rs.getString(2))
+                        + (rs.getString(3))
+                        + (rs.getString(4))
+                        + (rs.getString(5)));
                 products.add(new Product(rs.getInt("id"), rs.getString("name"),
                         rs.getString("category"), rs.getDouble("price"), rs.getInt("quantity")));
             }

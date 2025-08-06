@@ -50,8 +50,8 @@ public class AddOrderController {
     }
 
     private void loadData() {
-        customers.setAll(OrderFactory.loadCustomersWithPhone());
-        products.setAll(OrderFactory.loadAvailableProducts());
+        customers.setAll(OrderFactory.getInstance().loadCustomersWithPhone());
+        products.setAll(OrderFactory.getInstance().loadAvailableProducts());
     }
 
     private void setupComboBoxes() {

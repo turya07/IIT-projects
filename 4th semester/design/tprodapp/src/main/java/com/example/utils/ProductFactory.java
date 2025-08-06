@@ -24,9 +24,9 @@ public class ProductFactory {
     public ObservableList<Product> getProducts() {
         // ConnectDB.initDB();
         try (PreparedStatement pstmt = ConnectDB.getConnection().prepareStatement("SELECT * FROM products;")) {
-            products.clear();
 
             ResultSet rs = pstmt.executeQuery();
+            products.clear();
             while (rs.next()) {
                 Product p = new Product(
                         rs.getInt("id"),

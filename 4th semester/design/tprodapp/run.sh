@@ -6,20 +6,20 @@ set -e  # Exit on error
 echo "=== JavaFX Application Setup and Runner ==="
 
 # # Check if Maven is installed
- if ! command -v mvn &> /dev/null; then
-     echo "Maven is not installed. Installing Maven..."
-     sudo apt update
-     sudo apt install maven -y
-     echo "Maven installed successfully."
- fi
+#  if ! command -v mvn &> /dev/null; then
+#      echo "Maven is not installed. Installing Maven..."
+#      sudo apt update
+#      sudo apt install maven -y
+#      echo "Maven installed successfully."
+#  fi
 
-# # Check if SQLite is installed
- if ! command -v sqlite3 &> /dev/null; then
-     echo "SQLite3 is not installed. Installing SQLite3..."
-     sudo apt update
-     sudo apt install sqlite3 -y
-     echo "SQLite3 installed successfully."
- fi
+# # # Check if SQLite is installed
+#  if ! command -v sqlite3 &> /dev/null; then
+#      echo "SQLite3 is not installed. Installing SQLite3..."
+#      sudo apt update
+#      sudo apt install sqlite3 -y
+#      echo "SQLite3 installed successfully."
+#  fi
 
 # # Create database if it doesn't exist
 # if [ ! -f "data.db" ]; then
@@ -43,9 +43,9 @@ fi
 echo "Maven JavaFX plugin failed. Trying direct Java execution..."
 
 # Alternative: Install OpenJFX if not available
-echo "Installing OpenJFX..."
-sudo apt update
-sudo apt install openjfx -y
+# echo "Installing OpenJFX..."
+# sudo apt update
+# sudo apt install openjfx -y
 
 # Try to find JavaFX installation
 JAVAFX_PATHS=(

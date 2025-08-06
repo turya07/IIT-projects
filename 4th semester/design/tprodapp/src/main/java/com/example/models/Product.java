@@ -18,14 +18,6 @@ public class Product {
         this.quantity = new SimpleIntegerProperty(quantity);
     }
 
-    public Product(String name, String category, double price, int quantity) {
-        this.id = new SimpleIntegerProperty(0);
-        this.name = new SimpleStringProperty(name);
-        this.category = new SimpleStringProperty(category);
-        this.price = new SimpleDoubleProperty(price);
-        this.quantity = new SimpleIntegerProperty(quantity);
-    }
-
     @Override
     public String toString() {
         return "Product{" +

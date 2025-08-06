@@ -36,9 +36,6 @@ public class CustomerController  {
     private Button ordersButton;
 
     @FXML
-    private Button customersButton;
-
-    @FXML
     private Button logoutButton;
 
     @FXML

@@ -1,95 +1,78 @@
-
 package com.example.models;
 
-import javafx.beans.property.IntegerProperty;
+import java.time.LocalDateTime;
+
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class InvoiceItem {
-    private IntegerProperty orderId;
-    private IntegerProperty productId;
-    private IntegerProperty customerId;
-    private StringProperty productName;
-    private IntegerProperty quantity;
-    private DoubleProperty unitPrice;
-    private DoubleProperty lineTotal;
+    private static InvoiceItem instance;
+    private final IntegerProperty customerId;
+    private final StringProperty productName;
+    private final IntegerProperty quantity;
+    private final DoubleProperty unitPrice;
+    private final DoubleProperty lineTotal;
+    private LocalDateTime orderDate;
 
-    public InvoiceItem(int orderId, int productId, int customerId, String productName, int quantity, double unitPrice) {
-        this.orderId = new SimpleIntegerProperty(orderId);
-        this.productId = new SimpleIntegerProperty(productId);
-        this.customerId = new SimpleIntegerProperty(customerId);
-        this.productName = new SimpleStringProperty(productName);
-        this.quantity = new SimpleIntegerProperty(quantity);
-        this.unitPrice = new SimpleDoubleProperty(unitPrice);
-        this.lineTotal = new SimpleDoubleProperty(quantity * unitPrice);
-    }
-
-    public InvoiceItem(String productName, int quantity, double unitPrice, double lineTotal) {
+    private InvoiceItem(int cid, String productName, int quantity, double unitPrice, double lineTotal,
+            String orderDate) {
+        this.customerId = new SimpleIntegerProperty(cid);
         this.productName = new SimpleStringProperty(productName);
         this.quantity = new SimpleIntegerProperty(quantity);
         this.unitPrice = new SimpleDoubleProperty(unitPrice);
         this.lineTotal = new SimpleDoubleProperty(lineTotal);
+        this.orderDate = LocalDateTime.parse(orderDate.replace(' ', 'T'));
     }
 
-    public IntegerProperty getOrderId() {
-        return orderId;
+    // 2007-12-03T10:15:30
+    public static void init(int cid, String productName, int quantity, double unitPrice, double lineTotal,
+            String orderDate) {
+        InvoiceItem.instance = new InvoiceItem(cid, productName, quantity, unitPrice, lineTotal, orderDate);
     }
 
-    public void setOrderId(IntegerProperty orderId) {
-        this.orderId = orderId;
+    public LocalDateTime getDate() {
+        return orderDate;
     }
 
-    public IntegerProperty getProductId() {
-        return productId;
+    public int getCustomerId() {
+        return customerId.get();
     }
 
-    public void setProductId(IntegerProperty productId) {
-        this.productId = productId;
+    public String getProductName() {
+        return productName.get();
     }
 
-    public IntegerProperty getCustomerId() {
-        return customerId;
+    public int getQuantity() {
+        return quantity.get();
     }
 
-    public void setCustomerId(IntegerProperty customerId) {
-        this.customerId = customerId;
+    public double getUnitPrice() {
+        return unitPrice.get();
     }
 
-    public StringProperty getProductName() {
-        return productName;
+    public double getLineTotal() {
+        return lineTotal.get();
     }
 
-    public void setProductName(StringProperty productName) {
-        this.productName = productName;
+    // getter of instance
+    public static InvoiceItem getInstance() {
+        return instance;
     }
 
-    public IntegerProperty getQuantity() {
-        return quantity;
+    @Override
+    public String toString() {
+        return "InvoiceItem ["
+                + "productName=" + productName.get() + ", quantity=" + quantity.get() + ", unitPrice="
+                + unitPrice.get()
+                + ", lineTotal=" + lineTotal.get() + "]";
     }
 
-    public void setQuantity(IntegerProperty quantity) {
-        this.quantity = quantity;
+    public LocalDateTime getOrderDate() {
+        return orderDate;
     }
-
-    public DoubleProperty getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(DoubleProperty unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public DoubleProperty getLineTotal() {
-        return lineTotal;
-    }
-
-    public void setLineTotal(DoubleProperty lineTotal) {
-        this.lineTotal = lineTotal;
-    }
-
-    
 
 }

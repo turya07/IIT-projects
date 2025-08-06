@@ -77,7 +77,7 @@ public class ProductController {
         // You can open a new window or dialog to add product details
         System.out.println("Add Product window opened successfully.");
 
-        Product newProduct = new Product(getText(productNameField),
+        Product newProduct = new Product(Integer.parseInt(productIdField.getText()), getText(productNameField),
                 getText(productCategoryField),
                 Double.parseDouble(getText(productPriceField)), Integer.parseInt(getText(productQuantityField)));
 
